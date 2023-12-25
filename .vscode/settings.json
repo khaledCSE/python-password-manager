@@ -1,0 +1,13 @@
+{
+  "cSpell.words": [
+    "fernet",
+    "figlet",
+    "khaled",
+    "prettytable",
+    "pyfiglet",
+    "termcolor"
+  ],
+  "python.analysis.autoImportCompletions": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "ms-python.python"
+}
