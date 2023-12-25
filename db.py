@@ -59,7 +59,8 @@ class DatabaseManager:
         self.cursor.execute("SELECT encrypted_password FROM passwords WHERE url=?", (url,))
         encrypted_password = self.cursor.fetchone()
         if encrypted_password:
-            return self._decrypt_password(encrypted_password[0])
+            encrypted_password = list(encrypted_password)[0]
+            return encrypted_password
         return None
     else:
         self.cursor.execute("SELECT * FROM passwords")
@@ -80,12 +81,13 @@ class DatabaseManager:
     return encrypted_password
 
   def _decrypt_password(self, encrypted_password):
-      self.cursor.execute("SELECT encryption_key FROM master_password")
-      key = ''.join(self.cursor.fetchone())
-       
-      fernet = Fernet(key)
-      plain_password = (fernet.decrypt(encrypted_password)).decode('utf-8')
-      return plain_password
+    self.cursor.execute("SELECT encryption_key FROM master_password")
+    key = ''.join(self.cursor.fetchone())
+
+    fernet = Fernet(key)
+    plain_password = fernet.decrypt(encrypted_password)
+    return plain_password.decode()
+    
 
   def copy_password_to_clipboard(self, url):
       password = self.get_password(url)

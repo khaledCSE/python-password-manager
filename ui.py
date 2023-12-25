@@ -85,7 +85,8 @@ class UI:
       
   def get_password(self):
     url = input("Enter URL: ")
-    self.get_password(url)
+    password = self.password_manager.get_password(url)
+    print(f'Password: {password}')
     
   def list_passwords(self):
     passwords = self.password_manager.list_passwords()
