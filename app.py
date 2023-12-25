@@ -7,8 +7,7 @@ if __name__ == "__main__":
     manager = PasswordManager(database)
     ui = UI(manager)
     
-    # ui.greet_user()
-    # ui.display_menu()
+    ui.greet_user()
     ui.check_master_password()
 
 

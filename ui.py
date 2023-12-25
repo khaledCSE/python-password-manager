@@ -87,11 +87,12 @@ class UI:
     url = input("Enter URL: ")
     password = self.password_manager.get_password(url)
     print(f'Password: {password}')
+    self.display_menu()
     
   def list_passwords(self):
     passwords = self.password_manager.list_passwords()
     table = PrettyTable()
-    table.field_names = ['ID', 'Category', 'URL', 'Password']
+    table.field_names = ['ID', 'URL', 'Category', 'Password']
     table.add_rows(passwords)
     print(table)
     
