@@ -47,6 +47,9 @@ class PasswordManager:
     def get_password(self, url):
         return self.db_manager._decrypt_password(self.db_manager.get_password(url))
     
+    def list_passwords(self):
+        return self.db_manager.get_password()
+    
     def get_master_password(self):
         master_password = self.db_manager.get_master_password()
         return master_password

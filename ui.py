@@ -27,6 +27,8 @@ class UI:
       master_password = input('Enter master password to save (Make sure it\'s rememberable): ')
       self.password_manager.set_master_password(master_password)
       
+      self.display_menu()
+      
 
   def greet_user(self):
       """Prints a cyberpunk-themed greeting in ASCII art."""
@@ -79,13 +81,18 @@ class UI:
       self.password_manager.copy_password_to_clipboard(url)
       print("Password added successfully!")
       
+      self.display_menu()
+      
   def get_password(self):
     url = input("Enter URL: ")
     self.get_password(url)
     
   def list_passwords(self):
+    passwords = self.password_manager.list_passwords()
     table = PrettyTable()
-    table.field_names = ['#', 'Category', 'URL', 'Password']
-    table.add_row([1, 'Gaming', 'http://ea.com', '123456'])
+    table.field_names = ['ID', 'Category', 'URL', 'Password']
+    table.add_rows(passwords)
     print(table)
+    
+    self.display_menu()
     
