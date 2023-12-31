@@ -72,6 +72,8 @@ class UI:
       self.get_password()
     elif choice == '4':
       self.list_passwords()
+    elif choice == '5':
+      self.update_master_password()
     elif choice == '6':
       self.delete_password()
     elif choice == '7':
@@ -117,6 +119,14 @@ class UI:
     password = getpass.getpass("Enter Password (Leave blank to generate a strong password): ")
     
     self.password_manager.update_password(url, password)
+    
+    self.display_menu()
+    
+    
+  def update_master_password(self):
+    password = getpass.getpass('Enter master password to save (Make sure it\'s rememberable): ')
+    
+    self.password_manager.update_master_password(password)
     
     self.display_menu()
       

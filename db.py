@@ -107,6 +107,22 @@ class DatabaseManager:
         
     except sqlite3.Error as e:
       print(f"Error occurred while updating password: {e}")
+      
+  def update_master_password(self, password: str):
+    try:
+      # Encrypt the new password before updating (assuming you use the same encryption method as when adding)
+      encrypted_password = self._encrypt_password(password)
+      
+      # Update the password in the database
+      self.cursor.execute("UPDATE master_password SET password = ? WHERE url = ?", (encrypted_password,))
+      
+      # Commit the changes
+      self.conn.commit()
+      
+      print("Master Password updated successfully!")
+        
+    except sqlite3.Error as e:
+      print(f"Error occurred while updating password: {e}")
   
   def close(self):
       self.conn.close()

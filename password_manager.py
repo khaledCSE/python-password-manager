@@ -64,6 +64,9 @@ class PasswordManager:
         
     def update_password(self, url: str, password: string):
         self.db_manager.update_password(url, password)
+        
+    def update_master_password(self, password: string):
+        self.db_manager.update_master_password(password)
     
     def close(self):
         self.db_manager.close()
