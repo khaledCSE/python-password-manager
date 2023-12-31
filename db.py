@@ -92,5 +92,21 @@ class DatabaseManager:
     self.cursor.execute("DELETE FROM passwords WHERE url = ?", (url.strip(),))
     self.conn.commit()
   
+  def update_password(self, url: str, password: str):
+    try:
+      # Encrypt the new password before updating (assuming you use the same encryption method as when adding)
+      encrypted_password = self._encrypt_password(password)
+      
+      # Update the password in the database
+      self.cursor.execute("UPDATE passwords SET encrypted_password = ? WHERE url = ?", (encrypted_password, url))
+      
+      # Commit the changes
+      self.conn.commit()
+      
+      print("Password updated successfully!")
+        
+    except sqlite3.Error as e:
+      print(f"Error occurred while updating password: {e}")
+  
   def close(self):
       self.conn.close()

@@ -66,6 +66,8 @@ class UI:
     
     if choice == '1':
       self.add_password()
+    elif choice == '2':
+      self.update_password()
     elif choice == '3':
       self.get_password()
     elif choice == '4':
@@ -109,3 +111,12 @@ class UI:
     
     self.display_menu()
     
+  
+  def update_password(self):
+    url = input('Enter url: ')
+    password = getpass.getpass("Enter Password (Leave blank to generate a strong password): ")
+    
+    self.password_manager.update_password(url, password)
+    
+    self.display_menu()
+      
