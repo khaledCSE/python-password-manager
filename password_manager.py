@@ -1,5 +1,6 @@
 import string
 import random
+import clipboard
 from db import DatabaseManager
 
 class PasswordManager:
@@ -33,8 +34,6 @@ class PasswordManager:
 
     def compare_passwords(self, plain_text, encrypted):
         decrypted = self.db_manager._decrypt_password(''.join(encrypted))
-        print(decrypted)
-        return True
         return decrypted == plain_text
     
     def add_password(self, url, category, password):
@@ -57,8 +56,11 @@ class PasswordManager:
     def set_master_password(self, password):
         self.db_manager.create_master_password(password)
 
-    def copy_password_to_clipboard(self, url):
-        self.db_manager.copy_password_to_clipboard(url)
+    def copy_password_to_clipboard(self, password):
+        clipboard.copy(password)
 
+    def delete_password(self, url):
+        self.db_manager.delete_password(url)
+    
     def close(self):
         self.db_manager.close()

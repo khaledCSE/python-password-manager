@@ -14,7 +14,7 @@ class DatabaseManager:
     self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS passwords (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                url TEXT NOT NULL,
+                url TEXT NOT NULL UNIQUE,
                 category TEXT,
                 encrypted_password TEXT NOT NULL
             );
@@ -87,12 +87,10 @@ class DatabaseManager:
     fernet = Fernet(key)
     plain_password = fernet.decrypt(encrypted_password)
     return plain_password.decode()
-    
 
-  def copy_password_to_clipboard(self, url):
-      password = self.get_password(url)
-      if password:
-          clipboard.copy(password)
-
+  def delete_password(self, url):
+    self.cursor.execute("DELETE FROM passwords WHERE url = ?", (url.strip(),))
+    self.conn.commit()
+  
   def close(self):
       self.conn.close()

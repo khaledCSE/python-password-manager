@@ -2,6 +2,7 @@ from password_manager import PasswordManager
 from termcolor import colored
 import pyfiglet
 from prettytable import PrettyTable
+import getpass
 
 class UI:
   def __init__(self, password_manager: PasswordManager) -> None:
@@ -13,7 +14,7 @@ class UI:
     master_password_found = self.password_manager.get_master_password()
     
     if master_password_found:
-      master_password = input('Enter master password: ')
+      master_password = getpass.getpass('Enter master password: ')
       if (self.password_manager.compare_passwords(master_password, master_password_found)):
         self.display_menu()
       else:
@@ -69,6 +70,8 @@ class UI:
       self.get_password()
     elif choice == '4':
       self.list_passwords()
+    elif choice == '6':
+      self.delete_password()
     elif choice == '7':
       print('Thanks for using the password manager 👏👏👏')
       exit(1)
@@ -76,9 +79,9 @@ class UI:
   def add_password(self):
       url = input("Enter URL: ")
       category = input("Enter Category (games/desktop/social): ")
-      password = input("Enter Password (Leave blank to generate a strong password): ")
+      password = getpass.getpass("Enter Password (Leave blank to generate a strong password): ")
       self.password_manager.add_password(url, category, password)
-      self.password_manager.copy_password_to_clipboard(url)
+      self.password_manager.copy_password_to_clipboard(password)
       print("Password added successfully!")
       
       self.display_menu()
@@ -87,6 +90,7 @@ class UI:
     url = input("Enter URL: ")
     password = self.password_manager.get_password(url)
     print(f'Password: {password}')
+    self.password_manager.copy_password_to_clipboard(password)
     self.display_menu()
     
   def list_passwords(self):
@@ -95,6 +99,13 @@ class UI:
     table.field_names = ['ID', 'URL', 'Category', 'Password']
     table.add_rows(passwords)
     print(table)
+    
+    self.display_menu()
+  
+  def delete_password(self):
+    url = input('Enter url: ')
+    self.password_manager.delete_password(url)
+    print('Deleted successfully')
     
     self.display_menu()
     
